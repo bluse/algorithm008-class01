@@ -1,0 +1,40 @@
+func isValid(s string) bool {
+    stack := make([]string, 0)
+    for _, v := range s {
+        if string(v) == "(" || string(v) == "[" || string(v) == "{" {
+            stack = append(stack, string(v))
+        } else {
+            if len(stack) != 0 && match(string(v)) == stack[len(stack) - 1] {
+                stack = stack[:len(stack) - 1]
+            } else {
+                return false
+            }
+        }
+    }
+    
+    return len(stack) == 0
+}
+
+func match(s string) string {
+    var res string
+    switch s {
+        case ")":
+        res = "("
+        case "]":
+        res = "["
+        case "}":
+        res = "{"
+    }
+    return res
+}
+
+/**
+ * leetcode no.20 有效的括号
+ * 重点:
+ * 1. 左括号必须用相同类型的右括号闭合
+ * 2. 左括号必须以正确的顺序闭合
+ * 实现方案:
+ * 遇到左括号时，入栈
+ * 遇到右括号时，检查栈顶元素是否为当前右括号对应的左括号，如果是则弹出该栈顶元素
+ * 最后如果栈为空，则该字符串为有效字符串
+ */
