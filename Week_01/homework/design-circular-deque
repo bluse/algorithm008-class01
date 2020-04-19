@@ -1,0 +1,147 @@
+/**
+ * 641. 设计循环双端队列
+ */
+//代码实现(go语言实现)
+type MyCircularDeque struct {
+    head *Node
+    tail *Node
+    len int
+    count int
+}
+
+type Node struct {
+    next *Node
+    prev *Node
+    val int
+}
+
+
+/** Initialize your data structure here. Set the size of the deque to be k. */
+func Constructor(k int) MyCircularDeque {
+    head := Node {
+        nil,
+        nil,
+        -1,
+    }
+    tail := Node {
+        nil,
+        nil,
+        -1,
+    }
+    head.next = &tail
+    tail.prev = &head
+    return MyCircularDeque {
+        &head,
+        &tail,
+        k,
+        0,
+    }
+}
+
+
+/** Adds an item at the front of Deque. Return true if the operation is successful. */
+func (this *MyCircularDeque) InsertFront(value int) bool {
+    if this.IsFull() == true {
+        return false
+    }
+    tempNode := this.head.next
+    newNode := Node {
+        next: tempNode,
+        prev: this.head,
+        val: value,
+    }
+    this.head.next = &newNode
+    tempNode.prev = &newNode
+    this.count++
+    return true
+}
+
+
+/** Adds an item at the rear of Deque. Return true if the operation is successful. */
+func (this *MyCircularDeque) InsertLast(value int) bool {
+    if this.IsFull() == true {
+        return false
+    }
+    tempNode := this.tail.prev
+    newNode := Node {
+        next: this.tail,
+        prev: tempNode,
+        val: value,
+    }
+    this.tail.prev = &newNode
+    tempNode.next = &newNode
+    this.count++
+    return true
+}
+
+
+/** Deletes an item from the front of Deque. Return true if the operation is successful. */
+func (this *MyCircularDeque) DeleteFront() bool {
+    if this.IsEmpty() == true {
+        return false
+    }
+    deleteNode := this.head.next
+    this.head.next = deleteNode.next
+    deleteNode.next.prev = this.head
+    deleteNode.next, deleteNode.prev = nil, nil
+    this.count--
+    return true
+}
+
+
+/** Deletes an item from the rear of Deque. Return true if the operation is successful. */
+func (this *MyCircularDeque) DeleteLast() bool {
+    if this.IsEmpty() == true {
+        return false
+    }
+    deleteNode := this.tail.prev
+    deleteNode.prev.next = this.tail
+    this.tail.prev = deleteNode.prev
+    deleteNode.next, deleteNode.prev = nil, nil
+    this.count--
+    return true
+}
+
+
+/** Get the front item from the deque. */
+func (this *MyCircularDeque) GetFront() int {
+    if this.IsEmpty() == true {
+        return -1
+    }
+    return this.head.next.val
+}
+
+
+/** Get the last item from the deque. */
+func (this *MyCircularDeque) GetRear() int {
+    if this.IsEmpty() == true {
+        return -1
+    }
+    return this.tail.prev.val
+}
+
+
+/** Checks whether the circular deque is empty or not. */
+func (this *MyCircularDeque) IsEmpty() bool {
+    return this.head.next == this.tail
+}
+
+
+/** Checks whether the circular deque is full or not. */
+func (this *MyCircularDeque) IsFull() bool {
+    return this.len == this.count
+}
+
+
+/**
+ * Your MyCircularDeque object will be instantiated and called as such:
+ * obj := Constructor(k);
+ * param_1 := obj.InsertFront(value);
+ * param_2 := obj.InsertLast(value);
+ * param_3 := obj.DeleteFront();
+ * param_4 := obj.DeleteLast();
+ * param_5 := obj.GetFront();
+ * param_6 := obj.GetRear();
+ * param_7 := obj.IsEmpty();
+ * param_8 := obj.IsFull();
+ */
