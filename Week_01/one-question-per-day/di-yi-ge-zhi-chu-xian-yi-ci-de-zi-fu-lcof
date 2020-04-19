@@ -1,0 +1,19 @@
+/**
+ * 面试题50.第一个只出现一次的字符
+ * 思路:
+ * 用一个数组，按顺序记录每个字符出现的次数，然后再按顺序进行一次遍历，第一个出现次数为1的字符就是结果，时间复杂度为O(1)
+ */
+//代码实现(go语言实现)
+func firstUniqChar(s string) byte {
+    var list [26]int
+    length := len(s)
+    for i:=0;i<length;i++ {
+        list[s[i]-'a']++
+    }
+    for i:=0;i<length;i++{
+        if list[s[i]-'a'] == 1 {
+            return s[i]
+        }
+    }
+    return ' '
+}
