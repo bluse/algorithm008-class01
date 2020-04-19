@@ -1,0 +1,40 @@
+/**
+ * 15. 三数之和
+ * leetcode地址: https://leetcode-cn.com/problems/3sum/
+ */
+//代码实现(go语言实现)
+func threeSum(nums []int) [][]int {
+    //排序
+    sort.Ints(nums)
+    res := [][]int{}
+    numsLen := len(nums)
+    for i := 0; i < numsLen; i++ {
+        if nums[i] > 0 {
+            break
+        }
+        if len(res) > 0 && nums[i] == res[len(res) - 1][0] {
+            continue
+        }
+        left, right := i + 1, numsLen - 1
+        for left < numsLen && left < right {
+            if nums[left] + nums[right] > 0 - nums[i] {
+                right--
+                continue
+            }
+            if nums[left] + nums[right] < 0 - nums[i] {
+                left++
+                continue
+            }
+            if len(res) > 0 && res[len(res) - 1][0] == nums[i] && res[len(res) - 1][1] == nums[left] {
+                left++
+                right--
+                continue
+            }
+            res = append(res, []int{nums[i], nums[left], nums[right]})
+            left++
+            right--
+        }
+    }
+
+    return res
+}
