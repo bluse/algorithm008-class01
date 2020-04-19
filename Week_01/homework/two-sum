@@ -1,0 +1,19 @@
+/**
+ * 1. 两数之和
+ * leetcode地址: https://leetcode-cn.com/problems/two-sum/
+ */
+//代码实现(go语言实现)
+func twoSum(nums []int, target int) []int {
+    m := make(map[int]int)
+    res := []int{0, 0}
+    for i, v := range nums {
+        k := target - v
+        if _, ok := m[k]; ok {
+            res[0] = m[k]
+            res[1] = i
+            break
+        }
+        m[v] = i
+    }
+    return res
+}
