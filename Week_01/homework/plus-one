@@ -1,0 +1,21 @@
+/**
+ * 66. 加一
+ * leetcode地址: https://leetcode-cn.com/problems/plus-one/
+ */
+//代码实现(go语言实现)
+func plusOne(digits []int) []int {
+    for i := len(digits) - 1; i >= 0; i-- {
+        if digits[i] != 9 {
+            digits[i]++
+            return digits
+        }
+        if i == 0 {
+            digits[i] = 1
+            digits = append(digits, 0)
+            return digits
+        } else {
+            digits[i] = 0
+        }
+    }
+    return digits
+}
