@@ -1,0 +1,16 @@
+/**
+ * 283. 移动零
+ * leetcode地址: https://leetcode-cn.com/problems/move-zeroes/
+ */
+//代码实现(go语言实现)
+func moveZeroes(nums []int)  {
+    l := len(nums)
+    count := 0
+    for i := 0; i < l; i++ {
+        if nums[i] == 0 {
+            count++
+        } else {
+            nums[i - count], nums[i] = nums[i], nums[i - count]
+        }
+    }
+}
