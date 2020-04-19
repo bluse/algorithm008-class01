@@ -1,0 +1,17 @@
+/**
+ * 189. 旋转数组
+ * leetcode地址: https://leetcode-cn.com/problems/rotate-array/
+ */
+//代码实现(go语言实现)
+func rotate(nums []int, k int)  {
+    reverse(nums)
+    reverse(nums[:k % len(nums)])
+    reverse(nums[k % len(nums):])
+}
+
+func reverse(nums []int) {
+    l := len(nums)
+    for i := 0; i < l / 2; i++ {
+        nums[i], nums[l - i - 1] = nums[l - i - 1],nums[i]
+    }
+}
