@@ -1,0 +1,30 @@
+/**
+ * 42. 接雨水
+ * 实现思路:
+ * 用双指针一个从左往右，一个从右往左，较小元素的指针前进一位，同时累加可存储的雨水，直到两指针相遇之前为止，即可算出最多可接的雨水。时间复杂度O(n)
+ */
+//代码实现(go语言实现)
+func trap(height []int) int {
+    l := len(height)
+    left, right := 0, l - 1
+    res, lMax, rMax := 0, 0, 0
+    for left < right {
+        if height[left] < height[right] {
+            if lMax > height[left] {
+                res += lMax - height[left]
+            } else {
+                lMax = height[left]
+            }
+            left++
+        } else {
+            if rMax > height[right] {
+                res += rMax - height[right]
+            } else {
+                rMax = height[right]
+            }
+            right--
+        }
+    }
+
+    return res
+}
