@@ -33,3 +33,24 @@ func getHint(secret string, guess string) string {
 
     return strconv.Itoa(A) + "A" + strconv.Itoa(B) + "B"
 }
+
+//国际站高分实现(不要问为什么)
+func getHint(secret string, guess string) string {
+    A, B, numbersArr := 0, 0, [10]int{}
+    for i, _ := range secret {
+        if secret[i] == guess[i] {
+            A++
+        } else {
+            if numbersArr[secret[i] - '0'] < 0 {
+                B++
+            }
+            if numbersArr[guess[i] - '0'] > 0 {
+                B++
+            }
+            numbersArr[secret[i] - '0']++
+            numbersArr[guess[i] - '0']--
+        }
+    }
+
+    return strconv.Itoa(A) + "A" + strconv.Itoa(B) + "B"
+}
