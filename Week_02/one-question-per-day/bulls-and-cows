@@ -1,0 +1,35 @@
+/**
+ * 299. 猜数字游戏
+ * leetcode地址: https://leetcode-cn.com/problems/bulls-and-cows/
+ */
+
+/**
+ * 自己的解法(双百-代码比较难看)
+ * 解题思路:
+ * 1. 先用一个数组记录猜测数猜过的数字以及每个数字出现的次数
+ * 2. 第一次循环遍历秘密数字，比较同样位置的秘密数字和猜测数字并记录正确的个数(公牛A个数)，同时将步骤1中的数字出现次数进行减1操作
+ * 3. 第二次循环遍历秘密数字，比较同样位置的秘密数字和猜测数字并记录不正确数字(奶牛B个数)，同时将步骤1重的数字出现次数进行减1操作，直到等于0为止
+ */
+//代码实现
+func getHint(secret string, guess string) string {
+    A, B, guessArr := 0, 0, [10]int{}
+    for _, v := range guess {
+        guessArr[v - '0']++
+    }
+    for i, v := range secret {
+        if secret[i] == guess[i] {
+            A++
+            guessArr[v - '0']--
+        }
+    }
+    for i, v := range secret {
+        if secret[i] != guess[i] {
+            if guessArr[v - '0'] > 0 {
+                B++
+                guessArr[v - '0']--
+            }
+        }
+    }
+
+    return strconv.Itoa(A) + "A" + strconv.Itoa(B) + "B"
+}
