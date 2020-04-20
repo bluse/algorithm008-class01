@@ -1,0 +1,24 @@
+/**
+ * 290. 单词规律
+ * leetcode地址: https://leetcode-cn.com/problems/word-pattern/
+ */
+//代码实现(go语言实现)
+func wordPattern(pattern string, str string) bool {
+    strArr := strings.Split(str, " ")
+    if len(strArr) != len(pattern) {
+        return false
+    }
+    pMap, sMap := make(map[byte]string), make(map[string]byte)
+    for i, _ := range pattern {
+        pValue, pStatus := pMap[pattern[i]]
+        sValue, sStatus := sMap[strArr[i]]
+        if (pStatus && pValue != strArr[i]) || (sStatus && sValue != pattern[i]) {
+            return false
+        } else {
+            pMap[pattern[i]] = strArr[i]
+            sMap[strArr[i]] = pattern[i]
+        }
+    }
+
+    return true
+}
