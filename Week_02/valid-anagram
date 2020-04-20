@@ -1,0 +1,22 @@
+/**
+ * 242. 有效的字母异位词
+ * leetcode地址: https://leetcode-cn.com/problems/valid-anagram/
+ */
+//代码实现(go语言实现)
+func isAnagram(s string, t string) bool {
+    if len(s) != len(t) {
+        return false
+    }
+    var numbers [26]int
+    for i, _ := range s {
+        numbers[s[i] - 'a']++
+        numbers[t[i] - 'a']--
+    }
+    for _, v := range numbers {
+        if v != 0 {
+            return false
+        }
+    }
+
+    return true
+}
