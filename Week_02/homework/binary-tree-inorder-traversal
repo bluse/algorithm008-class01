@@ -1,0 +1,27 @@
+/**
+ * 94. 二叉树的中序遍历
+ * leetcode地址: https://leetcode-cn.com/problems/binary-tree-inorder-traversal/
+ */
+//代码实现(go语言实现) 递归实现
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func inorderTraversal(root *TreeNode) []int {
+    res := []int{}
+    rec(root, &res)
+    return res
+}
+
+func rec(node *TreeNode, res *[]int) {
+    if node == nil {
+        return
+    }
+    rec(node.Left, res)
+    *res = append(*res, node.Val)
+    rec(node.Right, res)
+}
