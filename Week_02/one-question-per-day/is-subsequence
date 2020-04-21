@@ -1,0 +1,43 @@
+/**
+ * 392. 判断子序列
+ * leetcode地址: https://leetcode-cn.com/problems/is-subsequence/
+ */
+//代码实现(go语言实现)
+func isSubsequence(s string, t string) bool {
+    if len(s) == 0 {
+        return true
+    }
+    cursor := 0
+    ls := len(s)
+    for i, _ := range t {
+        if t[i] == s[cursor] {
+            cursor++
+        }
+        if cursor == ls {
+            return true
+        }
+    }
+
+    return false
+}
+//考虑s比较长的情况
+func isSubsequence(s string, t string) bool {
+    if len(s) == 0 {
+        return true
+    }
+    cursor := 0
+    ls, lt := len(s), len(t)
+    for i, _ := range t {
+        if t[i] == s[cursor] {
+            cursor++
+        }
+        if cursor == ls {
+            return true
+        }
+        if ls - cursor > lt - i - 1 {
+            return false
+        }
+    }
+
+    return false
+}
