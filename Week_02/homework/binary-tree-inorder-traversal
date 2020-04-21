@@ -25,3 +25,27 @@ func rec(node *TreeNode, res *[]int) {
     *res = append(*res, node.Val)
     rec(node.Right, res)
 }
+// 栈实现-还没理解透彻，下回再来
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func inorderTraversal(root *TreeNode) []int {
+    node, stack, res := root, []*TreeNode{}, []int{}
+    for node != nil || len(stack) > 0 {
+        for node != nil  {
+            stack = append(stack, node)
+            node = node.Left
+        }
+        node = stack[len(stack) - 1]
+        stack = stack[:len(stack) - 1]
+        res = append(res, node.Val)
+        node = node.Right
+    }
+
+    return res
+}
