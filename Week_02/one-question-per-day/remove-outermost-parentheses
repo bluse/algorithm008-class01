@@ -38,3 +38,20 @@ func removeOuterParentheses(S string) string {
 
     return res
 }
+//其他方法二注意if语句顺序很有讲究不能随意调换
+func removeOuterParentheses(S string) string {
+    level, res := 0, []rune{}
+    for  _, v := range S {
+        if v == '(' {
+            level++
+        }
+        if level > 1 {
+            res = append(res, v)
+        }
+        if v == ')' {
+            level--
+        }
+    }
+
+    return string(res)
+}
