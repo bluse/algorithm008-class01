@@ -1,0 +1,23 @@
+/**
+ * 面试题59 - I. 滑动窗口的最大值
+ * https://leetcode-cn.com/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/
+ */
+//代码实现(go语言实现) - 先看题解，再自己做的，重要知识点-单调队列
+func maxSlidingWindow(nums []int, k int) []int {
+    res, deque := []int{}, [][]int{}
+    for i := 0; i < len(nums); i++ {
+        if len(deque) > 0 && deque[0][1] == i - k {
+            deque = deque[1:]
+        }
+        //维护窗口
+        for (len(deque) > 0 && nums[i] >= deque[len(deque) - 1][0]) || len(deque) == k {
+            deque = deque[:len(deque) - 1]
+        }
+        deque = append(deque, []int{nums[i], i})
+        if i >= k - 1 {
+            res = append(res, deque[0][0])
+        }
+    }
+
+    return res
+}
