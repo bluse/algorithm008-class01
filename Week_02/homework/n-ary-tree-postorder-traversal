@@ -1,0 +1,28 @@
+/**
+ * 590. N叉树的后序遍历
+ * leetcode地址: https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/
+ */
+//代码实现(go语言实现) - 递归实现 - 双百
+/**
+ * Definition for a Node.
+ * type Node struct {
+ *     Val int
+ *     Children []*Node
+ * }
+ */
+
+func postorder(root *Node) []int {
+    res := []int{}
+    rec(root, &res)
+    return res
+}
+
+func rec(node *Node, res *[]int) {
+    if node == nil {
+        return
+    }
+    for i := 0; i < len(node.Children); i++ {
+        rec(node.Children[i], res)
+    }
+    *res = append(*res, node.Val)
+}
