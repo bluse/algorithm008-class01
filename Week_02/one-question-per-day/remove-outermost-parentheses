@@ -55,3 +55,23 @@ func removeOuterParentheses(S string) string {
 
     return string(res)
 }
+//朋友实现的双百:):):)值得收藏
+func removeOuterParentheses(S string) string {
+    level := 0
+    var buffer bytes.Buffer
+    for _, s := range []byte(S) {
+        if s == '(' {
+            level++
+        } 
+
+        if level > 1 {
+            buffer.WriteByte(s)
+        }
+        
+        if s == ')' {
+            level--
+        }
+    }
+
+    return buffer.String()
+}
