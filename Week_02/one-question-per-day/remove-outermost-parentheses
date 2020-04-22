@@ -19,3 +19,22 @@ func removeOuterParentheses(S string) string {
 
     return res
 }
+//其他方法
+func removeOuterParentheses(S string) string {
+    start, level, res := 0, 0, ""
+    for i, _ := range S {
+        if S[i] == ')' {
+            level--
+            if level == 0 {
+                res += S[start:i]
+            }
+        } else {
+            if level == 0 {
+                start = i + 1
+            }
+            level++
+        }
+    }
+
+    return res
+}
