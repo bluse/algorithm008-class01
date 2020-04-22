@@ -1,0 +1,38 @@
+/**
+ * 429. N叉树的层序遍历
+ * leetcode地址: https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/
+ */
+//代码实现(go语言实现)
+/**
+ * Definition for a Node.
+ * type Node struct {
+ *     Val int
+ *     Children []*Node
+ * }
+ */
+
+func levelOrder(root *Node) [][]int {
+    if root == nil {
+        return [][]int{}
+    }
+    //广度优先思路
+    res, stack := [][]int{}, []*Node{}
+    stack = append(stack, root)
+    for len(stack) > 0 {
+        level := []int{}
+        stackLen := len(stack)
+        for i := 0; i < stackLen; i++ {
+            node := stack[0]
+            stack = stack[1:]
+            if node != nil {
+                level = append(level, node.Val)
+            }
+            for j := 0; j < len(node.Children); j++ {
+                stack = append(stack, node.Children[j])
+            }
+        }
+        res = append(res, level)
+    }
+
+    return res
+}
