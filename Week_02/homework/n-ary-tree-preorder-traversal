@@ -1,0 +1,27 @@
+/**
+ * 589. N叉树的前序遍历
+ * leetcode地址: https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/
+ */
+//代码实现(go语言实现)-递归
+/**
+ * Definition for a Node.
+ * type Node struct {
+ *     Val int
+ *     Children []*Node
+ * }
+ */
+
+func preorder(root *Node) []int {
+    res := []int{}
+    gen(root, &res)
+    return res
+}
+
+func gen(node *Node, res *[]int) {
+    if node != nil {
+        *res = append(*res, node.Val)
+        for _, node := range node.Children {
+            gen(node, res)
+        }
+    }
+}
