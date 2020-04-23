@@ -1,0 +1,17 @@
+/**
+ * 258. 各位相加
+ * leetcode地址: https://leetcode-cn.com/problems/add-digits/
+ */
+//代码实现(go语言实现)
+func addDigits(num int) int {
+    for num > 9 {
+        temp := 0
+        for num > 0 {
+            temp += num % 10
+            num = num / 10
+        }
+        num = temp
+    }
+
+    return num
+}
