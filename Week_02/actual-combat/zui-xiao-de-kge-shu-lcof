@@ -1,0 +1,41 @@
+/**
+ * 面试题40. 最小的k个数
+ * leetcode地址: https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/
+ */
+//代码实现(go语言实现)
+func getLeastNumbers(arr []int, k int) []int {
+    arrLen, sortLen := len(arr), 0
+    l, r := 0, arrLen - 1
+    for sortLen != k {
+        sortLen = qSort(arr, l, r)
+        if sortLen == k {
+            break
+        }
+        if sortLen > k {
+            r = sortLen - 1
+        } else {
+            l = sortLen + 1
+        }
+        if l >= r {
+            break
+        }
+        start := rand.Intn(r) % (r - l + 1) + l
+        arr[start], arr[r] = arr[r], arr[start]
+    }
+
+    return arr[:k]
+}
+
+func qSort(arr []int, l, r int) int {
+    sentry := arr[r]
+    i := l - 1
+    for j := l; j < r; j++ {
+        if arr[j] <= sentry {
+            i++
+            arr[i], arr[j] = arr[j], arr[i]
+        }
+    }
+    arr[r], arr[i + 1] = arr[i + 1], arr[r]
+
+    return i + 1
+}
