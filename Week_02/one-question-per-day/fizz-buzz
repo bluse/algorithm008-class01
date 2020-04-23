@@ -19,3 +19,22 @@ func fizzBuzz(n int) []string {
 
     return res
 }
+//略微优化
+func fizzBuzz(n int) []string {
+    res := []string{}
+    for i := 1; i <= n; i++ {
+        tmpStr := ""
+        if i % 3 == 0 {
+            tmpStr += "Fizz"
+        }
+        if i % 5 == 0 {
+            tmpStr += "Buzz"
+        }
+        if tmpStr == "" {
+            tmpStr += strconv.Itoa(i)
+        }
+        res = append(res, tmpStr)
+    }
+
+    return res
+}
