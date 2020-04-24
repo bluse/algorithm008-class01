@@ -47,3 +47,50 @@ func max(a, b int) int {
 
     return b
 }
+//自底向上实现方法
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isBalanced(root *TreeNode) bool {
+    return rec(root) != -1
+}
+
+func rec(node *TreeNode) int {
+    if node == nil {
+        return 0
+    }
+    left := rec(node.Left)
+    if left == -1 {
+        return -1
+    }
+    right := rec(node.Right)
+    if right == -1 {
+        return -1
+    }
+    if abs(left, right) < 2 {
+        return max(left, right) + 1
+    }
+
+    return -1
+}
+
+func abs(a, b int) int {
+    if a > b {
+        return a - b
+    }
+
+    return b - a
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+
+    return b
+}
