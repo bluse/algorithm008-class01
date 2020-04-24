@@ -1,0 +1,49 @@
+/**
+ * 110. 平衡二叉树
+ * leetcode地址: https://leetcode-cn.com/problems/balanced-binary-tree/
+ */
+//代码实现(go语言实现)
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isBalanced(root *TreeNode) bool {
+    if root == nil {
+        return true
+    }
+    if !isBalanced(root.Left) || !isBalanced(root.Right) {
+        return false
+    }
+    leftHeight := height(root.Left)
+    rightHeight := height(root.Right)
+    if leftHeight > rightHeight {
+        if leftHeight - rightHeight > 1 {
+            return false
+        }
+    } else {
+        if rightHeight - leftHeight > 1 {
+            return false
+        }
+    }
+
+    return true
+}
+
+func height(node *TreeNode) int {
+    if node == nil {
+        return 0
+    }
+    return 1 + max(height(node.Left), height(node.Right))
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+
+    return b
+}
