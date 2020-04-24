@@ -1,0 +1,38 @@
+/**
+ * 111. 二叉树的最小深度
+ * leetcode地址: https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/
+ */
+//代码实现(go语言实现)-栈实现
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func minDepth(root *TreeNode) int {
+    if root == nil {
+        return 0
+    }
+    res, stack := 0, []*TreeNode{}
+    stack = append(stack, root)
+    for len(stack) > 0 {
+        res++
+        stackLen := len(stack)
+        for i := 0; i < stackLen; i++ {
+            if stack[i].Left == nil && stack[i].Right == nil {
+                return res
+            }
+            if stack[i].Left != nil {
+                stack = append(stack, stack[i].Left)
+            }
+            if stack[i].Right != nil {
+                stack = append(stack, stack[i].Right)
+            }
+        }
+        stack = stack[stackLen:]
+    }
+
+    return res
+}
