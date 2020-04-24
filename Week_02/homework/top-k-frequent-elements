@@ -1,0 +1,66 @@
+/**
+ * 347. 前 K 个高频元素
+ * leetcode地址: https://leetcode-cn.com/problems/top-k-frequent-elements/
+ */
+//代码实现(go语言实现)-大根堆实现
+func topKFrequent(nums []int, k int) []int {
+    numsLen := len(nums)
+    if k >= numsLen {
+        return nums
+    }
+    res, numMap := []int{}, map[int]int{}
+    for _, v := range nums {
+        numMap[v]++
+    }
+    heap := buildHeap(numMap)
+    for len(res) < k {
+        res = append(res, heap[0][0])
+        heap = heapfiUp(heap)
+    }
+    return res
+}
+
+//建堆
+func buildHeap(numMap map[int]int) [][]int {
+    heap := [][]int{}
+    for i, v := range numMap {
+        heap = append(heap, []int{i, v})
+        newIndex := len(heap) - 1
+        for newIndex > 0 && heap[newIndex][1] > heap[(newIndex - 1) / 2][1] {
+            heap[newIndex], heap[(newIndex - 1) / 2] = heap[(newIndex - 1) / 2], heap[newIndex]
+            newIndex = (newIndex - 1) / 2
+        }
+    }
+
+    return heap
+}
+
+//向上维护堆
+func heapfiUp(heap [][]int) [][]int {
+    if len(heap) < 1 {
+        return heap
+    }
+
+    heap[0] = heap[len(heap) - 1]
+    heap = heap[:len(heap) - 1]
+    heapLen := len(heap)
+    if heapLen < 2 {
+        return heap
+    }
+    minIndex := 0
+    for {
+        i := minIndex
+        if i * 2 + 1 < heapLen && heap[minIndex][1] < heap[i * 2 + 1][1] {
+            minIndex = i * 2 + 1
+        }
+        if i * 2 + 2 < heapLen && heap[minIndex][1] < heap[i * 2 + 2][1] {
+            minIndex = i * 2 + 2
+        }
+        if minIndex == i {
+            break
+        }
+        heap[i], heap[minIndex] = heap[minIndex], heap[i]
+    }
+
+    return heap
+}
