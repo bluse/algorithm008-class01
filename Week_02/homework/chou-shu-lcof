@@ -19,7 +19,6 @@ func nthUglyNumber(n int) int {
             c++
         } 
     }
-    fmt.Println(stack)
 
     return stack[n - 1]
 }
