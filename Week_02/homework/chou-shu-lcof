@@ -1,0 +1,36 @@
+/**
+ * 面试题49. 丑数
+ * leetcode地址: https://leetcode-cn.com/problems/chou-shu-lcof/
+ */
+//代码实现(go语言实现)
+func nthUglyNumber(n int) int {
+    a, b, c, stack := 0, 0, 0, []int{}
+    stack = append(stack, 1)
+    for i := 0; i < n; i++ {
+        min := min(stack[a] * 2, stack[b] * 3, stack[c] * 5)
+        stack = append(stack, min)
+        if min == stack[a] * 2 {
+            a++
+        }
+        if min == stack[b] * 3 {
+            b++
+        }
+        if min == stack[c] * 5 {
+            c++
+        } 
+    }
+    fmt.Println(stack)
+
+    return stack[n - 1]
+}
+
+func min(a, b, c int) int {
+    if a < b && a < c {
+        return a
+    }
+    if b < a && b < c {
+        return b
+    }
+
+    return c
+}
