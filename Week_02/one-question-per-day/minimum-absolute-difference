@@ -1,0 +1,24 @@
+/**
+ * 1200. 最小绝对差
+ * leetcode地址: https://leetcode-cn.com/problems/minimum-absolute-difference/
+ */
+//代码实现(go语言实现)
+func minimumAbsDifference(arr []int) [][]int {
+    if len(arr) == 0 {
+        return [][]int{}
+    }
+    sort.Ints(arr)
+    minDepth, res := arr[len(arr) - 1] - arr[0], [][]int{}
+    for i := 1; i < len(arr); i++ {
+        if arr[i] - arr[i - 1] == minDepth {
+            res = append(res, []int{arr[i - 1], arr[i]})
+        }
+        if arr[i] - arr[i - 1] < minDepth {
+            minDepth = arr[i] - arr[i - 1]
+            res = [][]int{}
+            res = append(res, []int{arr[i - 1], arr[i]})
+        }
+    }
+
+    return res
+}
