@@ -1,0 +1,35 @@
+/**
+ * 543. 二叉树的直径
+ * leetcode地址: https://leetcode-cn.com/problems/diameter-of-binary-tree/
+ */
+//代码实现(go语言实现)
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func diameterOfBinaryTree(root *TreeNode) int {
+    res := 1
+    rec(root, &res)
+
+    return res - 1
+}
+
+func rec(node *TreeNode, res *int) int {
+    if node == nil {
+        return 0
+    }
+    LeftDepth := rec(node.Left, res)
+    rightDepth := rec(node.Right, res)
+    if LeftDepth + rightDepth + 1 > *res {
+        *res = LeftDepth + rightDepth + 1
+    }
+    if LeftDepth > rightDepth {
+        return LeftDepth + 1
+    } else {
+        return rightDepth + 1
+    }
+}
