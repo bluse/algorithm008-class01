@@ -21,3 +21,29 @@ func setZeroes(matrix [][]int)  {
         }
     }
 }
+//数组实现
+func setZeroes(matrix [][]int)  {
+    rowArr, colArr := make([]int, len(matrix)),make([]int, len(matrix[0]))
+    for i := 0; i < len(matrix); i++ {
+        for j := 0; j < len(matrix[i]); j++ {
+            if matrix[i][j] == 0 {
+                rowArr[i] = 1
+                colArr[j] = 1
+            }
+        }
+    }
+    for i := 0; i < len(matrix); i++ {
+        //处理行
+        if rowArr[i] == 1 {
+            for j := 0; j < len(matrix[i]); j++ {
+                matrix[i][j] = 0
+            }
+        } else {
+            for k, v := range colArr {
+                if v == 1 {
+                   matrix[i][k] = 0 
+                }
+            }
+        }
+    }
+}
