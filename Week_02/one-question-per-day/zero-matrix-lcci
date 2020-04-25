@@ -1,0 +1,23 @@
+/**
+ * 面试题 01.08. 零矩阵
+ * https://leetcode-cn.com/problems/zero-matrix-lcci/
+ */
+//代码实现(go语言实现)
+func setZeroes(matrix [][]int)  {
+    rowMap, colMap := map[int]int{},map[int]int{}
+    for i := 0; i < len(matrix); i++ {
+        for j := 0; j < len(matrix[i]); j++ {
+            if matrix[i][j] == 0 {
+                rowMap[i] = 1
+                colMap[j] = 1
+            }
+        }
+    }
+    for i := 0; i < len(matrix); i++ {
+        for j := 0; j < len(matrix[i]); j++ {
+            if rowMap[i] == 1 || colMap[j] == 1 {
+                matrix[i][j] = 0
+            }
+        }
+    }
+}
