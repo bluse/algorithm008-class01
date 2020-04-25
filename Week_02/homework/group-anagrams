@@ -1,0 +1,32 @@
+/**
+ * 49. 字母异位词分组
+ * leetcode地址: https://leetcode-cn.com/problems/group-anagrams/
+ */
+//代码实现(go语言实现)
+func groupAnagrams(strs []string) [][]string {
+    res, strMap := [][]string{}, map[string][]string{}
+    for _, v := range strs {
+        tmp := encodeStr(v)
+        strMap[tmp] = append(strMap[tmp], v)
+    }
+    for _, v := range strMap {
+        res = append(res, v)
+    }
+
+    return res
+}
+
+func encodeStr(str string) string {
+    res, strArr := "", [26]int{}
+
+    for _, v := range str {
+        strArr[v - 'a']++
+    }
+    for i, _ := range strArr {
+        if strArr[i] > 0 {
+            res += string(i) + string(strArr[i])
+        }
+    }
+
+    return res
+}
