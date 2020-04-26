@@ -1,0 +1,30 @@
+/**
+ * 200. 岛屿数量
+ * leetcode地址: https://leetcode-cn.com/problems/number-of-islands/
+ */
+//代码实现(go语言实现)
+func numIslands(grid [][]byte) int {
+    res, x, y, stack := 0, []int{-1, 0, 1, 0}, []int{0, -1, 0, 1}, [][]int{}
+    for i := 0; i < len(grid); i++ {
+        for j := 0; j < len(grid[i]); j++ {
+            if grid[i][j] == '1' {
+                res++
+                stack = append(stack, []int{i, j})
+                for len(stack) > 0 {
+                    temp := stack[0]
+                    stack = stack[1:]
+                    for k := 0; k < 4; k++ {
+                        nX := temp[0] + x[k]
+                        nY := temp[1] + y[k]
+                        if nX >= 0 && nX < len(grid) && nY >= 0 && nY < len(grid[i]) && grid[nX][nY] == '1' {
+                            stack = append(stack, []int{nX, nY})
+                            grid[nX][nY] = '0'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return res
+}
