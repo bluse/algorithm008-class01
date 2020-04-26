@@ -1,0 +1,43 @@
+/**
+ * 23. 合并K个排序链表
+ * leetcode地址: https://leetcode-cn.com/problems/merge-k-sorted-lists/
+ */
+//代码实现(go语言实现)
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func mergeKLists(lists []*ListNode) *ListNode {
+    var res *ListNode
+    for _, list := range lists {
+        res = mergeTwoList(res, list)
+    }
+
+    return res
+}
+
+func mergeTwoList(list1, list2 *ListNode) *ListNode {
+    sentry := &ListNode{}
+    p := sentry
+    for list1 != nil && list2 != nil {
+        if list1.Val < list2.Val {
+            p.Next = list1
+            list1 = list1.Next
+        } else {
+            p.Next = list2
+            list2 = list2.Next
+        }
+        p = p.Next
+    }
+    if list1 != nil {
+        p.Next = list1
+    }
+    if list2 != nil {
+        p.Next = list2
+    }
+
+    return sentry.Next
+}
