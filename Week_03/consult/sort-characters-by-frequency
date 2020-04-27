@@ -58,3 +58,26 @@ func heapfiUp(stack [][]int) [][]int {
 
     return stack
 }
+//双百实现
+type CharacterFrequency struct {
+    Char byte
+    Count int
+}
+
+func frequencySort(s string) string {
+    characterFrequencys := [256]CharacterFrequency{}
+    for _, char := range []byte(s){
+        characterFrequencys[char].Count++
+        characterFrequencys[char].Char = char
+    }
+
+    sort.Slice(characterFrequencys[0:256], func(i, j int) bool{return characterFrequencys[i].Count > characterFrequencys[j].Count})
+    
+    ans := make([]byte, 0, len(s))
+    for i := 0; i < 256; i++ {
+        for j := 0; j < characterFrequencys[i].Count; j++ {
+            ans = append(ans, characterFrequencys[i].Char)
+        }
+    }
+    return string(ans)
+}
