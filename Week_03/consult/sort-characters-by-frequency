@@ -1,0 +1,60 @@
+/**
+ * 451. 根据字符出现频率排序
+ * leetcode地址: https://leetcode-cn.com/problems/sort-characters-by-frequency/
+ */
+//代码实现(go语言实现)-小根堆
+func frequencySort(s string) string {
+    res, strArr := "", [256]int{}
+    for _, v := range s {
+        strArr[v]++
+    }
+    heap := heapfi(strArr)
+    for len(heap) > 0 {
+        for i := 0; i < heap[0][1]; i++ {
+            res += string(heap[0][0])
+        }
+        heap = heapfiUp(heap)
+    }
+
+    return res
+}
+
+func heapfi(arr [256]int) [][]int {
+    stack := [][]int{}
+    for i := 0; i < 256; i++ {
+        if arr[i] > 0 {
+            stack = append(stack, []int{i, arr[i]})
+            maxPos := len(stack) - 1
+            for (maxPos - 1) / 2  >= 0 && stack[maxPos][1] > stack[(maxPos - 1) / 2][1] {
+                stack[maxPos], stack[(maxPos - 1) / 2] = stack[(maxPos - 1) / 2], stack[maxPos]
+                maxPos = (maxPos - 1) / 2
+            }
+        }
+    }
+
+    return stack
+}
+
+func heapfiUp(stack [][]int) [][]int {
+    stack[0] = stack[len(stack) - 1]
+    stack = stack[:len(stack) - 1]
+    if len(stack) == 0 {
+        return [][]int{}
+    }
+    maxPos := 0
+    for maxPos * 2 + 1 < len(stack) {
+        i := maxPos
+        if stack[maxPos][1] < stack[i * 2 + 1][1] {
+            maxPos = i * 2 + 1
+        }
+        if i * 2 + 2 < len(stack) && stack[maxPos][1] < stack[i * 2 + 2][1] {
+            maxPos = i * 2 + 2
+        }
+        if maxPos == i {
+            break
+        }
+        stack[i], stack[maxPos] = stack[maxPos], stack[i]
+    }
+
+    return stack
+}
