@@ -1,0 +1,24 @@
+/**
+ * 22. 括号生成
+ * leetcode地址: https://leetcode-cn.com/problems/generate-parentheses/
+ */
+//代码实现(go语言实现)-递归实现
+func generateParenthesis(n int) []string {
+    res := []string{}
+    rec(&res, n, 0, 0, "")
+
+    return res
+}
+
+func rec(res *[]string, n, i, j int, str string) {
+    if i == n && j == n {
+        *res = append(*res, str)
+        return
+    }
+    if i < n {
+        rec(res, n, i + 1, j, str + "(")
+    }
+    if j < i {
+        rec(res, n, i, j + 1, str + ")")
+    }
+}
