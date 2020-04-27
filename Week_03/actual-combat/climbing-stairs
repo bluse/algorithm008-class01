@@ -1,0 +1,16 @@
+/**
+ * 70. 爬楼梯
+ * leetcode地址: https://leetcode-cn.com/problems/climbing-stairs/
+ */
+//代码实现(go语言实现)
+func climbStairs(n int) int {
+    if n < 3 {
+        return n
+    }
+    a, b := 1, 2
+    for i := 3; i < n; i++ {
+        a, b = b, a + b
+    }
+
+    return a + b
+}
