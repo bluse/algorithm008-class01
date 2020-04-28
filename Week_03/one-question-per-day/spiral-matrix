@@ -1,0 +1,33 @@
+/**
+ * 54. 螺旋矩阵
+ * leetcode地址: https://leetcode-cn.com/problems/spiral-matrix/
+ */
+//代码实现(go)
+func spiralOrder(matrix [][]int) []int {
+    if len(matrix) == 0 {
+        return []int{}
+    }
+    m, n, r, c, di, res := len(matrix), len(matrix[0]), 0, 0, 0, []int{}
+    screen := make([][]int, m)
+    for i := 0; i < m; i++ {
+        screen[i] = make([]int, n)
+    }
+    dx := []int{0, 1, 0, -1}
+    dy := []int{1, 0, -1, 0}
+    for i := 0; i < m * n; i++ {
+        res = append(res, matrix[r][c])
+        screen[r][c] = 1
+        cr := r + dx[di]
+        cc := c + dy[di]
+        if cr >= 0 && cr < m && cc >= 0 && cc < n && screen[cr][cc] == 0 {
+            r = cr
+            c = cc
+        } else {
+            di = (di + 1) % 4
+            r += dx[di]
+            c += dy[di]
+        }
+    }
+
+    return res
+}
