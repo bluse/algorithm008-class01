@@ -1,0 +1,36 @@
+/**
+ * 98. 验证二叉搜索树
+ * leetcode地址: https://leetcode-cn.com/problems/validate-binary-search-tree/
+ */
+//代码实现(go)-递归实现
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isValidBST(root *TreeNode) bool {
+    return rec(root, -1 << 63, 1 << 63 - 1)   
+}
+
+func rec(node *TreeNode, lower, upper int) bool {
+    if node == nil {
+        return true
+    }
+    if node.Val <= lower {
+        return false
+    }
+    if node.Val >= upper {
+        return false
+    }
+    if !rec(node.Left, lower, node.Val) {
+        return false
+    }
+    if !rec(node.Right, node.Val, upper) {
+        return false
+    }
+
+    return true
+}
