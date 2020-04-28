@@ -1,0 +1,35 @@
+/**
+ * maximum-depth-of-binary-tree
+ * leetcode地址: https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/submissions/
+ */
+//代码实现(go)-栈实现
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func maxDepth(root *TreeNode) int {
+    if root == nil {
+        return 0
+    }
+    res, stack := 0, []*TreeNode{}
+    stack = append(stack, root)
+    for len(stack) > 0 {
+        res++
+        stackLen := len(stack)
+        for i := 0; i < stackLen; i++ {
+            if stack[i].Left != nil {
+                stack = append(stack, stack[i].Left)
+            }
+            if stack[i].Right != nil {
+                stack = append(stack, stack[i].Right)
+            }
+        }
+        stack = stack[stackLen:]
+    }
+
+    return res
+}
