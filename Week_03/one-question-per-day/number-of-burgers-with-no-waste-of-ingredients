@@ -1,0 +1,35 @@
+/**
+ * 1276. 不浪费原料的汉堡制作方案
+ * leetcode地址: https://leetcode-cn.com/problems/number-of-burgers-with-no-waste-of-ingredients/
+ */
+//代码实现(go)-递归(超出时间限制-错误的思路)
+func numOfBurgers(tomatoSlices int, cheeseSlices int) []int {
+    res := []int{}
+    rec(tomatoSlices, cheeseSlices, 0, 0, &res)
+
+    return res
+}
+
+func rec(tomatoSlices, cheeseSlices, big, small int, res *[]int) {
+    if len(*res) == 2 {
+        return
+    }
+    if tomatoSlices == 0 && cheeseSlices == 0 {
+        *res = append(*res, big)
+        *res = append(*res, small)
+        return
+    }
+    if tomatoSlices > 3 && cheeseSlices > 0 {
+        rec(tomatoSlices - 4, cheeseSlices - 1, big + 1, small, res)
+    }
+    if tomatoSlices > 1 && cheeseSlices > 0 {
+        rec(tomatoSlices - 2, cheeseSlices - 1, big, small + 1, res)
+    }
+}
+//数学方法-解二元一次方程组
+func numOfBurgers(tomatoSlices int, cheeseSlices int) []int {
+    if tomatoSlices % 2 != 0 || tomatoSlices < cheeseSlices * 2 || 4 * cheeseSlices < tomatoSlices {
+        return []int{}
+    }
+    return []int{tomatoSlices / 2 - cheeseSlices, 2 * cheeseSlices - tomatoSlices / 2}
+}
