@@ -1,0 +1,35 @@
+/**
+ * 105. 从前序与中序遍历序列构造二叉树
+ * leetcode地址: https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+ */
+//代码实现(go)
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func buildTree(preorder []int, inorder []int) *TreeNode {
+    index, inMap := 0, map[int]int{}
+    for i, v := range inorder {
+        inMap[v] = i
+    }
+
+    return rec(preorder, inMap, 0, len(inorder), &index)
+}
+
+func rec(preorder []int, inMap map[int]int, left, right int, index *int) *TreeNode {
+    if left == right {
+        return nil
+    }
+    nodeVal := preorder[*index]
+    node := &TreeNode{Val: nodeVal}
+    inIndex := inMap[nodeVal]
+    *index++
+    node.Left = rec(preorder, inMap, left, inIndex, index)
+    node.Right = rec(preorder, inMap, inIndex + 1, right, index)
+
+    return node
+}
