@@ -1,0 +1,25 @@
+/**
+ * 面试题06. 从尾到头打印链表
+ * leetcode地址: https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/
+ */
+//代码实现(go)
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reversePrint(head *ListNode) []int {
+    res := []int{}
+    for head != nil {
+        res = append(res, head.Val)
+        head = head.Next
+    }
+    resLen := len(res)
+    for i := 0; i < resLen / 2; i++ {
+        res[i], res[resLen - i - 1] = res[resLen - i - 1], res[i]
+    }
+
+    return res
+}
