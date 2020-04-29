@@ -1,0 +1,17 @@
+/**
+ * 面试题05. 替换空格
+ * leetcode地址: https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/
+ */
+//代码实现(go)
+func replaceSpace(s string) string {
+    res := ""
+    for i := 0; i < len(s); i++ {
+        if s[i] == ' ' {
+            res += "%20"
+        } else {
+            res += string(s[i])
+        }
+    }
+
+    return res
+}
