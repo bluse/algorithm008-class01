@@ -1,0 +1,31 @@
+/**
+ * 77. 组合
+ * leetcode地址: https://leetcode-cn.com/problems/combinations/
+ */
+//代码实现(php)-回溯
+class Solution {
+
+    /**
+     * @param Integer $n
+     * @param Integer $k
+     * @return Integer[][]
+     */
+    function combine($n, $k) {
+        $result = [];
+        $this->rec(0, $n, $k, $result, []);
+
+        return $result;
+    }
+
+    function rec($cur, $n, $k, &$result, $data) {
+        if (count($data) == $k) {
+            $result[] = $data;
+            return;
+        }
+        if ($cur < $n && count($data) < $k) {
+            $this->rec($cur + 1, $n, $k, $result, $data);
+            $data[] = $cur + 1;
+            $this->rec($cur + 1, $n, $k, $result, $data);
+        }
+    }
+}
