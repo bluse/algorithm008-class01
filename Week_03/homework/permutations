@@ -1,0 +1,30 @@
+/**
+ * 46. 全排列
+ * leetcode地址: https://leetcode-cn.com/problems/permutations/
+ */
+//代码实现(go)
+func permute(nums []int) [][]int {
+    res := [][]int{}
+    rec(len(nums), nums, []int{}, &res)
+
+    return res
+}
+
+func rec(count int, ori, new []int, res *[][]int) {
+    if len(new) == count {
+        *res = append(*res, new)
+        return
+    }
+    for i := 0; i < len(ori); i++ {
+        tmpOri := []int{}
+        for j := 0; j < i; j++ {
+            tmpOri = append(tmpOri, ori[j])
+        }
+        for j := i + 1; j < len(ori); j++ {
+            tmpOri = append(tmpOri, ori[j])
+        }
+        tmpNew := new
+        tmpNew = append(tmpNew, ori[i])
+        rec(count, tmpOri, tmpNew, res)
+    } 
+}
