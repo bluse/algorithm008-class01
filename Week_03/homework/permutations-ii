@@ -39,3 +39,31 @@ class Solution {
         }
     }
 }
+//go实现
+func permuteUnique(nums []int) [][]int {
+    res := [][]int{}
+    sort.Ints(nums)
+    rec(len(nums), nums, []int{}, &res)
+
+    return res
+}
+
+func rec(count int, old, new []int, res *[][]int) {
+    if len(new) == count {
+        *res = append(*res, append([]int{}, new...))
+        return
+    }
+    for i := 0; i < len(old); i++ {
+        tmpOri := []int{};
+        for j := 0; j < i; j++ {
+            tmpOri = append(tmpOri, old[j])
+        }
+        for j := i + 1; j < len(old); j++ {
+            tmpOri = append(tmpOri, old[j])
+        }
+        rec(count, tmpOri, append(new, old[i]), res)
+        for i + 1 < len(old) && old[i + 1] == old[i] {
+            i++
+        }
+    }
+}
