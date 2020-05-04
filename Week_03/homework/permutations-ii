@@ -1,0 +1,41 @@
+/**
+ * 47. 全排列 II
+ * leetcode地址: https://leetcode-cn.com/problems/permutations-ii/
+ */
+//代码实现(php)
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @return Integer[][]
+     */
+    function permuteUnique($nums) {
+        $res = [];
+        sort($nums);
+        $this->rec(count($nums), $nums, [], $res);
+
+        return $res;
+    }
+
+    function rec($count, $old, $new, &$res) {
+        if (count($new) == $count) {
+            $res[] = $new;
+        }
+        for ($i = 0; $i < count($old); $i++) {
+            $tmpNew = $new;
+            $tmpNew[] = $old[$i];
+            $tmpOld = [];
+            for ($j = 0; $j < $i; $j++) {
+                $tmpOld[] = $old[$j]; 
+            }
+            for ($k = $i + 1; $k < count($old); $k++) {
+                $tmpOld[] = $old[$k];
+            }
+            $tmp = $old[$i];
+            while ($i + 1 < count($old) && $old[$i + 1] == $tmp) {
+                $i++;
+            }
+            $this->rec($count, $tmpOld, $tmpNew, $res);
+        }
+    }
+}
