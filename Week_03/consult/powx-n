@@ -1,0 +1,24 @@
+/**
+ * 50. Pow(x, n)
+ * leetcode地址: https://leetcode-cn.com/problems/powx-n/
+ */
+//代码实现(go)
+func myPow(x float64, n int) float64 {
+    if n < 0 {
+        x = 1 / x
+        n = -n
+    }
+    return rec(x, n)
+}
+
+func rec(x float64, n int) float64 {
+    if n == 0 {
+        return float64(1)
+    }
+    res := rec(x, n / 2)
+    if n % 2 == 0 {
+        return res * res
+    } else {
+        return res * res * x 
+    }
+}
