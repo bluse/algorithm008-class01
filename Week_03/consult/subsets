@@ -1,0 +1,20 @@
+/**
+ * 78. 子集
+ * leetcode地址: https://leetcode-cn.com/problems/subsets/
+ */
+//代码实现(go)-迭代法
+func subsets(nums []int) [][]int {
+    res := [][]int{}
+    res = append(res, []int{})
+    for _, nv := range nums {
+        tmps := [][]int{}
+        for _, rv := range res {
+            tmps = append(tmps, append(rv, nv))
+        }
+        for _, tv := range tmps {
+            res = append(res, append([]int{}, tv...))
+        }
+    }
+
+    return res
+}
