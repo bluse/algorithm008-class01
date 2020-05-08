@@ -1,0 +1,24 @@
+/**
+ * 74. 搜索二维矩阵
+ * leetcode地址: https://leetcode-cn.com/problems/search-a-2d-matrix/
+ */
+//代码实现(java)
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix.length == 0) return false;
+        int m = matrix.length, n = matrix[0].length, left = 0, right = m * n - 1, pivot, i, j;
+        while (left <= right) {
+            pivot = (right + left) / 2;
+            i = pivot / n;
+            j = pivot % n;
+            if (matrix[i][j] == target) return true;
+            if (matrix[i][j] > target) {
+                right = pivot - 1;
+            } else {
+                left = pivot + 1;   
+            }
+        }
+
+        return false;
+    }
+}
