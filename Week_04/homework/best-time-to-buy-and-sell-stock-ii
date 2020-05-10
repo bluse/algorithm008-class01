@@ -1,0 +1,17 @@
+/**
+ * 122. 买卖股票的最佳时机 II
+ * leetcode地址: https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/
+ */
+//代码实现(java) - 把每天的股票价格化成折线图，就明白原因了。
+class Solution {
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1]) {
+                maxProfit += prices[i] - prices[i - 1];
+            }
+        }
+
+        return maxProfit;
+    }
+}
