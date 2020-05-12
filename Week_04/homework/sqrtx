@@ -31,3 +31,26 @@ func mySqrt(x int) int {
 
     return pivot
 }
+//java二分法
+class Solution {
+  public int mySqrt(int x) {
+      long l = 0, r = x;
+      while (l < r) {
+          long pivot = (l + r + 1) >>> 1;
+          if (pivot * pivot > x) r = pivot - 1; else l = pivot;
+      }
+
+      return (int) l;
+  }
+}
+//java牛顿迭代法
+class Solution {
+  public int mySqrt(int x) {
+      long a = x;
+      while (a * a > x) {
+          a = (a + x / a) >>> 1;
+      }
+
+      return (int) a;
+  }
+}
