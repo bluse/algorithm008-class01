@@ -24,3 +24,14 @@ class Solution {
         return b;
     }
 }
+//从后往前判断
+class Solution {
+    public boolean canJump(int[] nums) {
+        int dept = 0;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            if (nums[i] > dept++) dept = 0;
+        }
+
+        return dept > 0 ? false : true;
+    }
+}
