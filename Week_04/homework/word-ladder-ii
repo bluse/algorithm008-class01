@@ -1,0 +1,82 @@
+/**
+ * 126. 单词接龙 II
+ * leetcode地址: https://leetcode-cn.com/problems/word-ladder-ii/
+ */
+//代码实现(java)
+class Solution {
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> ans = new ArrayList<>();
+        if (!wordList.contains(endWord)) {
+            return ans;
+        }
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
+        Set<String> begin = new HashSet<>(), end = new HashSet<>();
+        begin.add(beginWord);
+        end.add(endWord);
+        Set<String> wordSet = new HashSet<>(wordList);
+        if (buildTablebyTwoEndBfs(begin, end, wordSet, true, map)) {
+            ArrayList<String> path = new ArrayList<>();
+            path.add(beginWord);
+            findLaddersHelper(beginWord, endWord, map, path, ans);
+        }
+
+        return ans;
+    }
+
+    private void findLaddersHelper(String beginWord, String endWord, HashMap<String,
+    ArrayList<String>> map, ArrayList<String> path, List<List<String>> ans) {
+        if (beginWord.equals(endWord)) {
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+        ArrayList<String> neigbors = map.getOrDefault(beginWord, new ArrayList<>());
+        for (String neigbor : neigbors) {
+            path.add(neigbor);
+            findLaddersHelper(neigbor, endWord, map, path, ans);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    private boolean buildTablebyTwoEndBfs(Set<String> begin, Set<String> end,
+    Set<String> wordSet, boolean direction,
+    HashMap<String, ArrayList<String>> map) {
+        if (begin.isEmpty()) {
+            return false;
+        }
+        if (begin.size() > end.size()) {
+            return buildTablebyTwoEndBfs(end, begin, wordSet, !direction, map);
+        }
+        wordSet.removeAll(begin);
+        wordSet.removeAll(end);
+        boolean done = false;
+        Set<String> set = new HashSet<>();
+        for (String from : begin) {
+            for (int i = 0; i < from.length(); i++) {
+                char[] chars = from.toCharArray();
+                for (char ch = 'a'; ch < 'z'; ch++) {
+                    if (ch == chars[i]) {
+                        continue;
+                    }
+                    chars[i] = ch;
+                    String target = new String(chars);
+                    String key = direction ? from : target;
+                    String val = direction ? target : from;
+                    ArrayList<String> list = map.computeIfAbsent(key, k -> new ArrayList<>());
+                    if (wordSet.contains(target)) {
+                        set.add(target);
+                        list.add(val);
+                        continue;
+                    }
+                    if (end.contains(target)) {
+                        list.add(val);
+                        done = true;
+                    }
+                }
+            }
+        }
+
+        return done || buildTablebyTwoEndBfs(end, set, wordSet, !direction, map);
+    }
+
+
+}
