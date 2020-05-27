@@ -1,0 +1,50 @@
+/**
+ * 64. 最小路径和
+ * leetcode地址: https://leetcode-cn.com/problems/minimum-path-sum/
+ */
+//代码实现(java)-暴力解决(超时了)
+class Solution {
+
+    int min = Integer.MAX_VALUE;
+    public int minPathSum(int[][] grid) {
+        if (grid.length == 0 || grid[0].length == 0) return 0;
+        backTrace(grid, 0, 0, grid[0][0], grid.length - 1, grid[0].length - 1);
+        return min;
+    }
+
+    public void backTrace(int[][] grid, int r, int c, int median, int m, int n) {
+        if (m == r && n == c) {
+            if (median < min) {
+                min = median;
+            }
+        } else if (r <= m && c <= n) {
+            //向右移动
+            if (c + 1 <= n) backTrace(grid, r, c + 1, median + grid[r][c + 1], m, n);
+            //向下移动
+            if (r + 1 <= m) backTrace(grid, r + 1, c, median + grid[r + 1][c], m, n);
+        }
+    }
+}
+//动态规划
+class Solution {
+    public int minPathSum(int[][] grid) {
+        if (grid.length == 0 || grid[0].length == 0) return 0;
+        int m = grid.length, n = grid[0].length, tmp = 0;
+        for (int i = 1; i < m; i++) {
+            grid[i][0] = grid[i - 1][0] + grid[i][0];
+        }
+        for (int j = 1; j < n; j++) {
+            grid[0][j] = grid[0][j - 1] + grid[0][j];
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                tmp = grid[i][j];
+                //从上边过来
+                grid[i][j] = grid[i - 1][j] + tmp;
+                //从左边过来
+                if (grid[i][j - 1] + tmp < grid[i][j]) grid[i][j] = grid[i][j - 1] + tmp;
+            }
+        }
+        return grid[m - 1][n - 1];
+    }
+}
