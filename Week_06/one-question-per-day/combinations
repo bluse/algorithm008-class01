@@ -1,0 +1,24 @@
+/**
+ * 77. 组合
+ * leetcode地址: https://leetcode-cn.com/problems/combinations/
+ */
+//回溯(go)-双百
+func combine(n int, k int) [][]int {
+    sub, res := make([]int, k), [][]int{}
+    backTrace(n + 1, k, 1, 0, sub, &res)
+    return res
+}
+
+func backTrace(n, k, cur, l int, sub []int, res *[][]int) {
+    if sub[k - 1] != 0 {
+        *res = append(*res, append([]int{}, sub...))
+    } else {
+        for ; cur < n; cur++ {
+            if sub[k - 1] == 0 && k - l < n - cur + 1 {
+                sub[l] = cur
+                backTrace(n, k, cur + 1, l + 1, sub, res)
+                sub[l] = 0
+            }
+        }
+    }
+}
