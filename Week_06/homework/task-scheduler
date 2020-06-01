@@ -1,0 +1,21 @@
+/**
+ * 621. 任务调度器
+ * leetcode地址: https://leetcode-cn.com/problems/task-scheduler/
+ */
+//设计实现
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        int[] taskNums = new int[26];
+        for (char task : tasks) {
+            taskNums[task - 'A']++;
+        }
+        Arrays.sort(taskNums);
+        int maxValue = taskNums[25] - 1, freeUnits = maxValue * n;
+        for (int i = 24; i >= 0; i--) {
+            if (taskNums[i] > 0 && freeUnits > 0) {
+                freeUnits -= Math.min(maxValue, taskNums[i]);
+            }
+        }
+        return freeUnits > 0 ? freeUnits + tasks.length : tasks.length; 
+    }
+}
