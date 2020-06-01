@@ -1,0 +1,20 @@
+/**
+ * 647. 回文子串
+ * leetcode地址: https://leetcode-cn.com/problems/palindromic-substrings/
+ */
+//常规解法
+class Solution {
+    public int countSubstrings(String s) {
+        int n = s.length(), left, right, ans = 0;
+        for (int center = 0; center < 2 * n - 1; center++) {
+            left = center / 2;
+            right = left + center % 2;
+            while (left >= 0 && right < n && s.charAt(left) == s.charAt(right)) {
+                left--;
+                right++;
+                ans++;
+            }
+        }
+        return ans;
+    }
+}
