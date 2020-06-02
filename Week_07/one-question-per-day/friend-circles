@@ -49,3 +49,39 @@ class Solution {
         return ans;
     }
 }
+//并查集实现
+class Solution {
+    public int findCircleNum(int[][] M) {
+        int ans = 0, len = M.length;
+        int[] parent = new int[M.length];
+        Arrays.fill(parent, -1);
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len; j++) {
+                if (M[i][j] == 1) {
+                    union(parent, i, j);
+                }
+            }
+        }
+        for (int i = 0; i < len; i++) {
+            if (parent[i] == -1) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+    public int findParent(int[] parent, int child) {
+        if (parent[child] == -1) {
+            return child;
+        }
+        return findParent(parent, parent[child]);
+    }
+
+    public void union(int[] parent, int c, int p) {
+        c = findParent(parent, c);
+        p = findParent(parent, p);
+        if (c != p) {
+            parent[c] = p;
+        }
+    }
+}
