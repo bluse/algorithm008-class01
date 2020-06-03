@@ -18,3 +18,34 @@ class Solution {
         return ans;
     }
 }
+//马拉车解法
+class Solution {
+    public int countSubstrings(String S) {
+        int res = 0;
+        char[] A = new char[2 * S.length() + 3];
+        A[0] = '@';
+        A[1] = '#';
+        A[A.length - 1] = '$';
+        int i = 2;
+        for (char s : S.toCharArray()) {
+            A[i++] = s;
+            A[i++] = '#';
+        }
+        int[] Z = new int[A.length];
+        int center = 0, right = 0;
+        for (int j = 1; j < Z.length - 1; j++) {
+            if (j < right) {
+                Z[j] = Math.min(right - j, Z[2 * center - j]);
+            }
+            while (A[j + Z[j] + 1] == A[j - Z[j] - 1]) Z[j]++;
+            if (j + Z[j] > right) {
+                center = j;
+                right = j + Z[j];
+            }
+        }
+        for (int k = 0; k < Z.length; k++) {
+            res += (Z[k] + 1) / 2;
+        }
+        return res;
+    }
+}
