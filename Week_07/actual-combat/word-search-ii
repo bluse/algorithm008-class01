@@ -1,0 +1,88 @@
+/**
+ * 212. 单词搜索 II
+ * leetcode地址: https://leetcode-cn.com/problems/word-search-ii/
+ */
+//trie树+回溯
+class Solution {
+    Trie trie;
+    public List<String> findWords(char[][] board, String[] words) {
+        List<String> res = new ArrayList<>();
+        trie = new Trie();
+        for (String word : words) {
+            trie.insert(word);
+        }
+        int m = board.length, n = board[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int[][] visited = new int[m][n];
+                dfs(board, i, j, m, n, "", visited, res);
+            }
+        }
+        return res;
+    }
+
+    public void dfs(char[][] board, int row, int col, int m, int n, String word, int[][] visited, List<String> res) {
+        if (row >= 0 && row < m && col >= 0 && col < n && visited[row][col] == 0) {
+            word += board[row][col];
+            if (!trie.startWith(word)) return;
+            if (trie.search(word)) {
+                if (!res.contains(word)) {
+                    res.add(word);
+                }
+            }
+            visited[row][col] = 1;
+            dfs(board, row - 1, col, m, n, word, visited, res);
+            dfs(board, row, col - 1, m, n, word, visited, res);
+            dfs(board, row + 1, col, m, n, word, visited, res);
+            dfs(board, row, col + 1, m, n, word, visited, res);
+            visited[row][col] = 0;
+        }
+    }
+}
+
+class Trie {
+    private boolean isEnd;
+    private Trie[] next;
+
+    // Trie树构造函数
+    public Trie() {
+        isEnd = false;
+        next = new Trie[26];
+    }
+
+    // 插入单词
+    public void insert(String word) {
+        Trie curr = this;
+        for (char s : word.toCharArray()) {
+            int n = s - 'a';
+            if (curr.next[n] == null) curr.next[n] = new Trie();
+            curr = curr.next[n];
+        }
+        curr.isEnd = true;
+    }
+
+    // 搜索前缀方法
+    public Trie searchPrefix(String word) {
+        Trie curr = this;
+        for (char s : word.toCharArray()) {
+            int n = s - 'a';
+            if (curr.next[n] == null) return null;
+            curr = curr.next[n];
+        }
+        return curr;
+    }
+
+    // 搜索单词方法
+    public boolean search(String word) {
+        Trie curr = searchPrefix(word);
+        if (curr == null || curr.isEnd == false) return false;
+        return true;
+    }
+
+    // 验证前缀
+    public boolean startWith(String word) {
+        Trie curr = searchPrefix(word);
+        if (curr == null) return false;
+        return true;
+    }
+}
