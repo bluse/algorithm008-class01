@@ -1,0 +1,42 @@
+/**
+ * 436. 寻找右区间
+ * leetcode地址: https://leetcode-cn.com/problems/find-right-interval/
+ */
+//map+二分查找
+class Solution {
+    public int[] findRightInterval(int[][] intervals) {
+        Map<Integer, Integer> kv = new HashMap<>();
+        int n = intervals.length;
+        int[] keys = new int[n];
+        for (int i = 0; i < n; i++) {
+            kv.put(intervals[i][0], i);
+            keys[i] = intervals[i][0];
+        }
+        Arrays.sort(keys);
+        int[] res = new int[n];
+        for (int j = 0; j < n; j++) {
+            int end = intervals[j][intervals[j].length - 1];
+            if (!kv.containsKey(end)) {
+                if (end > keys[n - 1]) {
+                    res[j] = -1;
+                    continue;
+                }
+                //二分查找
+                int left = 0, right = n, median = 0;
+                while (left < right) {
+                    median = (right + left) / 2;
+                    if (end > keys[median]) {
+                        left = median + 1;
+                    } else {
+                        right = median;
+                    }
+                }
+                res[j] = kv.get(keys[right]);
+            } else {
+                res[j] = kv.get(end);
+            }
+        }
+
+        return res;
+    }
+}
