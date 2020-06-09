@@ -1,0 +1,58 @@
+/**
+ * 547. 朋友圈
+ * leetcode地址: https://leetcode-cn.com/problems/friend-circles/
+ */
+//java dfs实现
+class Solution {
+    public int findCircleNum(int[][] M) {
+        int res = 0;
+        int[] visited = new int[M.length];
+        for (int i = 0; i < M.length; i++) {
+            if (visited[i] == 0) {
+                res++;
+                dfs(M, i, visited);
+            }
+        }
+        return res;
+    }
+
+    public void dfs(int[][]M, int i, int[] visited) {
+        for (int j = 0; j < M.length; j++) {
+            if (M[i][j] == 1 && visited[j] == 0) {
+                visited[j] = 1;
+                dfs(M, j, visited);
+            }
+        }
+    }
+}
+//并查集方法
+class Solution {
+    public int findCircleNum(int[][] M) {
+        int res = 0;
+        int[] parent = new int[M.length];
+        for (int i = 0; i < M.length; i++) parent[i] = i;
+        for (int i = 0; i < M.length; i++) {
+            for (int j = 0; j < M.length; j++) {
+                if (M[i][j] == 1 && i != j) union(i, j, parent);
+            }
+        }
+        for (int i = 0; i < M.length; i++) {
+            if (parent[i] == i) res++;
+        }
+        return res;
+    }
+
+    public int find(int p, int[] parent) {
+        while (p != parent[p]) {
+            parent[p] = parent[parent[p]];
+            p = parent[p];
+        }
+        return p;
+    }
+
+    public void union(int p, int q, int[] parent) {
+        p = find(p, parent);
+        q = find(q, parent);
+        if (p != q) parent[q] = p;
+    }
+}
