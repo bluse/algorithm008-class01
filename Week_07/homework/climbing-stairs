@@ -1,0 +1,26 @@
+/**
+ * 70. 爬楼梯
+ * leetcode地址: https://leetcode-cn.com/problems/climbing-stairs/
+ */
+//java实现
+class Solution {
+    public int climbStairs(int n) {
+        if (n < 3) return n;
+        int a = 1, b = 2;
+        for (int i = 3; i <= n; i++) {
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+        return b;
+    }
+}
+//python3实现
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n < 3:
+            return n
+        a, b = 1, 2
+        for i in range(3, n + 1):
+            a, b = b, a + b
+        return b
