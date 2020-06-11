@@ -1,0 +1,21 @@
+/**
+ * 242. 有效的字母异位词
+ * leetcode地址: https://leetcode-cn.com/problems/valid-anagram/
+ */
+//java实现
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        int[] letterNums = new int[26];
+        if (s.length() != t.length()) return false;
+        for (int i = 0; i < s.length(); i++) {
+            letterNums[s.charAt(i) - 'a']++;
+            letterNums[t.charAt(i) - 'a']--;
+        }
+        for (int j : letterNums) {
+            if (j != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
