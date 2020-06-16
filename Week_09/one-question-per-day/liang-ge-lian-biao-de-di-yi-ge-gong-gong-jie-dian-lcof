@@ -1,0 +1,30 @@
+/**
+ * 面试题52. 两个链表的第一个公共节点
+ * leetcode地址: https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/
+ */
+//暴力法
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode A = headA, B = headB;
+        while (B != null) {
+            while (A != null) {
+                if (A == B) return B;
+                A = A.next;
+            }
+            B = B.next;
+            A = headA;
+        }
+        return null;
+    }
+}
+//相遇法
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode A = headA, B = headB;
+        while (A != B) {
+            A = A == null ? headB : A.next;
+            B = B == null ? headA : B.next;
+        }
+        return A;
+    }
+}
