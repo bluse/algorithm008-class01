@@ -1,0 +1,19 @@
+/**
+ * 541. 反转字符串 II
+ * leetcode地址: https://leetcode-cn.com/problems/reverse-string-ii/
+ */
+//暴力法实现
+class Solution {
+    public String reverseStr(String s, int k) {
+        char[] sArr = s.toCharArray();
+        for (int i = 0; i < sArr.length; i += 2 * k) {
+            int m = i, j = Math.min(i + k - 1, sArr.length - 1);
+            while (m < j) {
+                char tmp = sArr[m];
+                sArr[m++] = sArr[j];
+                sArr[j--] = tmp;
+            }
+        }
+        return new String(sArr);
+    }
+}
