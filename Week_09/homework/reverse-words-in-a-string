@@ -1,0 +1,28 @@
+/**
+ * 151. 翻转字符串里的单词
+ * leetcode地址: https://leetcode-cn.com/problems/reverse-words-in-a-string/
+ */
+//自己实现
+class Solution {
+    public String reverseWords(String s) {
+        String res = "";
+        String[] sArr = s.split("\\s+");
+        int i = 0, j = sArr.length - 1;
+        if (s.isEmpty() || sArr.length == 0) return res;
+        while (sArr[i].isEmpty()) i++;
+        while (sArr[j].isEmpty()) j--;
+        for (; j > i; j--) {
+            if (!sArr[j].isEmpty()) res += sArr[j] + " ";
+        }
+        return res += sArr[i];
+    }
+}
+//参考官方
+class Solution {
+    public String reverseWords(String s) {
+        s = s.trim();
+        List<String> wordList = Arrays.asList(s.split("\\s+"));
+        Collections.reverse(wordList);
+        return String.join(" ", wordList);
+    }
+}
