@@ -1,0 +1,20 @@
+/**
+ * 56. 合并区间
+ * leetcode地址: https://leetcode-cn.com/problems/merge-intervals/
+ */
+//常规实现
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        int[][] res = new int[intervals.length][];
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        int curr = -1;
+        for (int[] interval : intervals ) {
+            if (curr == -1 || interval[0] > res[curr][1]) {
+                res[++curr] = interval;
+            } else {
+                res[curr][1] = Math.max(interval[1], res[curr][1]);
+            }
+        }
+        return Arrays.copyOf(res, curr + 1);
+    }
+}
